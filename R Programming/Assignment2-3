@@ -1,0 +1,15 @@
+corr <- function(directory, threshold = 0) {
+  filenames <- list.files(directory)
+  filenames <- paste(directory, "//", filenames, sep = "")
+  all_files <- complete(directory)
+  cor_vector <- numeric()
+  for (i in 1:nrow(all_files)) {
+    if (all_files[i,2] > threshold) {
+      cor_vector <- c(cor_vector, cor(read.csv(filenames[i])$sulfate, read.csv(filenames[i])$nitrate, use = "pairwise.complete.obs")) 
+    }
+    #use :指定缺失数据的处理方式。可选的方式为all.obs（假设不存在缺失数据——遇到缺失数据时将报
+    #错）、everything（遇到缺失数据时，相关系数的计算结果将被设为missing）、complete.obs
+    #（行删除）以及 pairwise.complete.obs（成对删除，pairwise deletion）
+  }
+  cor_vector
+}
