@@ -1,0 +1,13 @@
+complete <- function(directory, ids = 1:332) {
+  filenames <- list.files(directory)
+  filenames <- filenames[ids]
+  filenames <- paste(directory, "//", filenames, sep = "")
+  id <- numeric(length(ids))
+  nobs <- numeric(length(ids))
+  for (i in 1:length(ids)) {
+    id[i] <- ids[i]
+    nobs[i] <- sum(complete.cases(read.csv(filenames[i])))
+  }
+  data.frame(id, nobs, stringsAsFactors = F)#指的是读入的数据中的字符串数据是否要变成属性数据，stringsAsFactors=FALSE就是不变成属性数据，按字符串
+  #读入。比如‘sex’变量有Fale,Female两种，可以只当做字符串，也可以做为属性变量。
+}
