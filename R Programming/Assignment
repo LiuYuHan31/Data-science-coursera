@@ -1,0 +1,15 @@
+pollutantmean<-function(directory,pollutant,id=1:332){
+  filenames<-list.files(directory)  #list.filess是显示目录下的文档命令
+  filenames<-filenames[id]
+  filenames<-paste(directory,"//",filenames,sep="")   #对于每一个 id，联合 directory 变量，合成一个路径完整的文件名,paste是粘贴向量函数
+  
+  all_data<-data.frame(Date=numeric(),sulphate=numeric(),nitrate=numeric(),ID=numeric())
+ #数据框是R语言里中的一种数据结构，其内部可以由多种数据类型，每一列是一个变量，每行是一个观测记录。
+ #在R中数据框是很通用的数据结构，它是一种特殊的列表对象。矩阵，list数据都可以转换成为数据框。
+ 
+ for(i in 1:length(id)){
+    all_data<-rbind(all_data,read.csv(filenames[i]))
+  }
+  #cbind是根据列进行合并，合并的前提是所有数据行数相等。 rbind是根据行进行合并，就是自动往下面顺延，但要求所有数据列数是相同的才能用rbind.
+  mean(all_data[,pollutant],na.rm = T)  #如果想去除NA的影响，需要显式告知mean方法，如 mean(x,na.rm=T)
+}
