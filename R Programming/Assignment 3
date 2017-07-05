@@ -1,0 +1,49 @@
+## Put comments here that give an overall description of what your
+## functions do
+
+# * setMatrix      set the value of a matrix
+# * getMatrix      get the value of a matrix
+# * cacheInverse   get the cahced value (inverse of the matrix)
+# * getInverse     get the cahced value (inverse of the matrix)
+
+makeCacheMatrix <- function(x = matrix()) {
+  cache <- NULL
+        
+        # store a matrix
+        setMatrix <- function(newValue) {
+                x <<- newValue
+                cache <<- NULL
+        }
+        getMatrix <- function() {
+                x
+        }
+        cacheInverse <- function(solve) {
+                cache <<- solve
+        }
+        getInverse <- function() {
+                cache
+        }
+        
+        list(setMatrix = setMatrix, getMatrix = getMatrix, cacheInverse = cacheInverse, getInverse = getInverse)
+}
+
+}
+
+cacheSolve <- function(x, ...) {
+        ## Return a matrix that is the inverse of 'x'
+        # get the cached value
+        inverse <- y$getInverse()
+        # if a cached value exists return it
+        if(!is.null(inverse)) {
+                message("getting cached data")
+                return(inverse)
+        }
+        # otherwise get the matrix, caclulate the inverse and store it in
+        # the cache
+        data <- y$getMatrix()
+        inverse <- solve(data)
+        y$cacheInverse(inverse)
+        
+        # return the inverse
+        inverse
+}
